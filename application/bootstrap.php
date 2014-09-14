@@ -142,7 +142,13 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'welcome',
 		'action'     => 'index',
 	));
+Kohana_Cookie::$salt = md5('somesalthere');
+Kohana_Cookie::$expiration = 1209600; // 14 days
+Kohana_Cookie::$domain = 'coop.lc';
+Session::$default = 'database';
+//Cookie::$salt = 'wordsgohere';
 
-Cookie::$salt = 'coop';
+
+//Cookie::$salt = 'coop';
 
 

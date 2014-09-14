@@ -11,5 +11,8 @@ class Template_Core extends Controller_Template {
         }*/
 		if ($this->template == '') $this->template = '_template';
 		parent::before();
+		$this->template->active = 'index';
+		$this->template->loggedIn = 0;
+		if (Auth::instance()->get_user() != null) $this->template->loggedIn = 1;
 	}
 }
