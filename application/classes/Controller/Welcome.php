@@ -13,9 +13,14 @@ class Controller_Welcome extends Template_Core {
 	{
 		$gameList = DB::query(Database::SELECT, "SELECT * FROM game")->execute();
 		$this->template->content = $gameList[0]['name'];
-		$game = Model::factory('Game')->insert(array('name' => 'test'));
-		
-		print_r($game);
+		try {
+			$result = Model::factory('Game')->update('asd', array('name' => 'asd'));
+			if ($result != 1) echo "Failed to update";
+			//print_r($game);
+		} catch (Validation_Exception $e) {
+			print_r($e);
+
+		}
 		exit;
 		//$this->template->content = View::factory('content');
 	}
