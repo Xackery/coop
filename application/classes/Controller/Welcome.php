@@ -4,9 +4,7 @@ class Controller_Welcome extends Controller {
 
 	public function action_index()
 	{
-		$renderer = Kostache::factory();
-		$this->response->body($renderer->render(new View_Test));
-		//$this->response->body('hello, world!');
+		$this->response->body('hello, world!');
 	}
 
 } // End Welcome
