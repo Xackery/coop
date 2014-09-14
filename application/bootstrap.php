@@ -130,6 +130,7 @@ Kohana::modules(array(
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'smarty' => MODPATH.'smarty', //Smarty Tempating Engine
+	'game' => MODPATH.'game',
 	));
 
 /**
