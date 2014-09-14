@@ -23,7 +23,8 @@ class Auth_OAuth2 extends Auth {
 		if ( ! $user)
 			return FALSE;
 
-		if ($user instanceof Model_User AND $user->loaded())
+
+		/*if ($user instanceof Model_User AND $user->loaded())
 		{
 			// If we don't have a roll no further checking is needed
 			if ( ! $role)
@@ -33,11 +34,7 @@ class Auth_OAuth2 extends Auth {
 			{
 				// Get all the roles using db query
 				$roles = DB::query(Database::SELECT, 'SELECT * FROM role WHERE name IN :role')->param(':role', $role)->execute()->as_array(); 
-				/*::factory('Role')
-							->where('name', 'IN', $role)
-							->find_all()
-							->as_array(NULL, 'id');
-*/
+
 				// Make sure all the roles are valid ones
 				if (count($roles) !== count($role))
 					return FALSE;
@@ -59,6 +56,10 @@ class Auth_OAuth2 extends Auth {
 
 			return $user->has('roles', $roles);
 		}
+		*/
+		print_r($user);
+		exit;
+		return TRUE;
 	}
 
 	/**
@@ -73,8 +74,7 @@ class Auth_OAuth2 extends Auth {
 	{
 		// Load the user
 		$user = DB::select()->from('user')->where('email', '=', $email)->limit(1)->execute();
-		if (count($user)) $user = $user[0];
-		else return FALSE;
+		if (!count($user)) return FALSE;
 	
 		if (is_string($password))
 		{
@@ -115,21 +115,17 @@ class Auth_OAuth2 extends Auth {
 	/**
 	 * Forces a user to be logged in, without specifying a password.
 	 *
-	 * @param   mixed    $user                    username string, or user ORM object
+	 * @param   mixed    $email                    email string
 	 * @param   boolean  $mark_session_as_forced  mark the session as forced
 	 * @return  boolean
 	 */
-	public function force_login($user, $mark_session_as_forced = FALSE)
+	public function force_login($email, $mark_session_as_forced = FALSE)
 	{
-		if ( ! is_object($user))
-		{
-			$username = $user;
-
-			// Load the user
-			$user = ORM::factory('User');
-			$user->where($user->unique_key($username), '=', $username)->find();
-		}
-
+	
+		// Load the user
+		$user = DB::select()->from('user')->where('email', '=', $email)->execute();
+		if (!count($user)) return false;
+		
 		if ($mark_session_as_forced === TRUE)
 		{
 			// Mark the session as forced, to prevent users from changing account information
@@ -266,8 +262,14 @@ class Auth_OAuth2 extends Auth {
 	 */
 	protected function complete_login($user)
 	{
-		$user->complete_login();
+		// Update the number of logins
+		//$this->logins = new Database_Expression('logins + 1');
 
+		// Set the last login date
+		//$this->last_login = time();
+
+		// Save the user
+		//$this->update();
 		return parent::complete_login($user);
 	}
 
