@@ -144,3 +144,5 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 	));
 
 Cookie::$salt = 'coop';
+
+
