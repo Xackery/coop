@@ -11,9 +11,6 @@ class Controller_Login extends Template_Core {
 	{
 		if (Auth::instance()->logged_in('login')) $this->redirect('member/index');
 
-		$post = $this->request->post();
-		$this->template->loginMessage = null;
-		
 		if (!Auth::instance()->login(Arr::get($post, 'email', ''), Arr::get($post, 'password', ''))) {
 			$this->template->loginMessage = SESSION::instance()->get('message');
 		} else {

@@ -130,6 +130,8 @@ Kohana::modules(array(
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'smarty' => MODPATH.'smarty', //Smarty Tempating Engine
+	'facebook' => MODPATH.'facebook', //Facebook OAUth2
+	'oauth2' => MODPATH.'oauth2',
 	));
 
 /**
