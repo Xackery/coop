@@ -25,10 +25,7 @@ DROP TABLE IF EXISTS `game`;
 CREATE TABLE `game` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `platform_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_platform_idx` (`platform_id`),
-  CONSTRAINT `fk_game_platform` FOREIGN KEY (`platform_id`) REFERENCES `platform` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,7 +35,7 @@ CREATE TABLE `game` (
 
 LOCK TABLES `game` WRITE;
 /*!40000 ALTER TABLE `game` DISABLE KEYS */;
-INSERT INTO `game` VALUES (1,'Test',1);
+INSERT INTO `game` VALUES (1,'Test');
 /*!40000 ALTER TABLE `game` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,6 +63,36 @@ CREATE TABLE `game_genre_list` (
 LOCK TABLES `game_genre_list` WRITE;
 /*!40000 ALTER TABLE `game_genre_list` DISABLE KEYS */;
 /*!40000 ALTER TABLE `game_genre_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `game_platform_list`
+--
+
+DROP TABLE IF EXISTS `game_platform_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_platform_list` (
+  `game_id` int(10) unsigned NOT NULL,
+  `platform_id` int(10) unsigned NOT NULL,
+  `year` mediumint(9) unsigned NOT NULL DEFAULT '1900',
+  `publisher_id` int(10) unsigned NOT NULL,
+  UNIQUE KEY `game_platform_UNIQUE` (`game_id`,`platform_id`),
+  KEY `fk_platform_idx` (`platform_id`),
+  KEY `fk_publisher_id_idx` (`publisher_id`),
+  CONSTRAINT `fk_game_id` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_platform_id` FOREIGN KEY (`platform_id`) REFERENCES `platform` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_publisher_id` FOREIGN KEY (`publisher_id`) REFERENCES `publisher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `game_platform_list`
+--
+
+LOCK TABLES `game_platform_list` WRITE;
+/*!40000 ALTER TABLE `game_platform_list` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game_platform_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -115,6 +142,85 @@ LOCK TABLES `platform` WRITE;
 INSERT INTO `platform` VALUES (1,'PC');
 /*!40000 ALTER TABLE `platform` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `publisher`
+--
+
+DROP TABLE IF EXISTS `publisher`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `publisher` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `publisher`
+--
+
+LOCK TABLES `publisher` WRITE;
+/*!40000 ALTER TABLE `publisher` DISABLE KEYS */;
+INSERT INTO `publisher` VALUES (1,'Test Publisher');
+/*!40000 ALTER TABLE `publisher` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sessions`
+--
+
+DROP TABLE IF EXISTS `sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sessions` (
+  `session_id` varchar(24) NOT NULL,
+  `last_active` int(10) unsigned NOT NULL,
+  `contents` text NOT NULL,
+  PRIMARY KEY (`session_id`),
+  KEY `last_active` (`last_active`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sessions`
+--
+
+LOCK TABLES `sessions` WRITE;
+/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(127) DEFAULT NULL,
+  `first_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(45) DEFAULT NULL,
+  `password` varchar(80) DEFAULT NULL,
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `logins` int(11) unsigned NOT NULL DEFAULT '1',
+  `deleted` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -125,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-13 19:57:53
+-- Dump completed on 2014-09-14  0:31:18

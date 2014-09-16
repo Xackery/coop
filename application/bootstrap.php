@@ -130,7 +130,8 @@ Kohana::modules(array(
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'smarty' => MODPATH.'smarty', //Smarty Tempating Engine
-	'game' => MODPATH.'game',
+	'facebook' => MODPATH.'facebook', //Facebook OAUth2
+	'oauth2' => MODPATH.'oauth2',
 	));
 
 /**
@@ -142,7 +143,13 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'welcome',
 		'action'     => 'index',
 	));
+Kohana_Cookie::$salt = md5('somesalthere');
+Kohana_Cookie::$expiration = 1209600; // 14 days
+Kohana_Cookie::$domain = 'coop.lc';
+Session::$default = 'database';
+//Cookie::$salt = 'wordsgohere';
 
-Cookie::$salt = 'coop';
+
+//Cookie::$salt = 'coop';
 
 

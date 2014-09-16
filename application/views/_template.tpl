@@ -36,18 +36,20 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Coop</a>
         </div>
         <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
+          {if !$loggedIn}
+          <form class="navbar-form navbar-right" role="form" method="post" action="/login">
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input type="text" name="email" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <input type="password" name="password" placeholder="Password" class="form-control">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </form>
+          {/if}
         </div><!--/.navbar-collapse -->
       </div>
     </div>
