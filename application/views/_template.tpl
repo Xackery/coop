@@ -98,6 +98,35 @@
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/bower_components/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
-  
+{literal}
+   <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : 'app-id',
+          
+          xfbml      : true,
+          version    : 'v2.1'
+        });
+        
+      FB.getLoginStatus(function(response) {
+  if (response.status === 'connected') {
+    console.log('Logged in.');
+  }
+  else {
+    FB.login();
+  }
+});
+      };
 
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+
+    </script>
+
+{/literal}
 </body></html>
