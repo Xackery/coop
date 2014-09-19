@@ -1,12 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 use Facebook\FacebookSession;
-use Facebook\FacebookSDKException;
-use Facebook\FacebookRequest;
-use Facebook\FacebookRedirectLoginHelper;
-
-use Facebook\FacebookSignedRequestFromInputHelper;
 use Facebook\FacebookJavaScriptLoginHelper;
-
 class Controller_Facebook extends Template_Core {
 
 	public function action_index()
@@ -14,30 +8,26 @@ class Controller_Facebook extends Template_Core {
 		$gameList = DB::query(Database::SELECT, "SELECT * FROM game")->execute();
 		$this->template->content = $gameList[0]['name'];
 
-		require_once(Kohana::find_file('vendor', 'Facebook/FacebookSession'));
-
-		require_once(Kohana::find_file('vendor', 'Facebook/Entities/AccessToken'));
-		require_once(Kohana::find_file('vendor', 'Facebook/HttpClients/FacebookCurlHttpClient'));
-		require_once(Kohana::find_file('vendor', 'Facebook/HttpClients/FacebookHttpable'));
-
-
-		require_once(Kohana::find_file('vendor', 'Facebook/FacebookRequest'));
-		require_once(Kohana::find_file('vendor', 'Facebook/FacebookSDKException'));
-		require_once(Kohana::find_file('vendor', 'Facebook/FacebookRedirectLoginHelper'));
-
-		
-		require_once(Kohana::find_file('vendor', 'Facebook/FacebookSignedRequestFromInputHelper'));
-		require_once(Kohana::find_file('vendor', 'Facebook/FacebookJavaScriptLoginHelper'));
+		require_once(Kohana::find_file('vendor', 'vendor/autoload'));
 		
 		$config = Kohana::$config->load('auth');
 
 		//$session = Session::instance($config['session_type']);
+		
 		FacebookSession::setDefaultApplication('376812619137510', 'd054fff7f6146da72c9585d78d0357b5');
+		$helper = new FacebookJavaScriptLoginHelper();
 
-$helper = new FacebookRedirectLoginHelper('http://coop.lc/facebook');
-session_start();
-$session = $helper->getSessionFromRedirect();
-$this->template->content = $helper->getLoginUrl();
+		$session = $helper->getSession();
+
+		if ($session) {
+
+		} else {
+			echo "No session";
+		}
+		//$helper = new FacebookRedirectLoginHelper('http://coop.lc/facebook');
+//session_start();
+//$session = $helper->getSessionFromRedirect();
+//$this->template->content = $helper->getLoginUrl();
 
  //$session = $helper->getSessionFromRedirect();
 //	$this->template->content = $helper->getLoginUrl();

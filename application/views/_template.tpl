@@ -103,7 +103,7 @@
       window.fbAsyncInit = function() {
         FB.init({
           appId      : 'app-id',
-          
+          cookie     : true, //IMPORTANT
           xfbml      : true,
           version    : 'v2.1'
         });
