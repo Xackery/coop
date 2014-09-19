@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 use Facebook\FacebookSession;
 use Facebook\FacebookJavaScriptLoginHelper;
+use Facebook\FacebookRequest;
 class Controller_Facebook extends Template_Core {
 
 	public function action_index()
@@ -16,72 +17,27 @@ class Controller_Facebook extends Template_Core {
 		
 		FacebookSession::setDefaultApplication('376812619137510', 'd054fff7f6146da72c9585d78d0357b5');
 		$helper = new FacebookJavaScriptLoginHelper();
-
-		$session = $helper->getSession();
-
-		if ($session) {
-
-		} else {
-			echo "No session";
-		}
-		//$helper = new FacebookRedirectLoginHelper('http://coop.lc/facebook');
-//session_start();
-//$session = $helper->getSessionFromRedirect();
-//$this->template->content = $helper->getLoginUrl();
-
- //$session = $helper->getSessionFromRedirect();
-//	$this->template->content = $helper->getLoginUrl();
-/*
-//facebook javascript helper
-		$helper = new FacebookJavaScriptLoginHelper();
-		  $session = $helper->getSession();
-		  print_r($session);
-		  echo "Rawr";
-		  if($session) {
-
-		  $this->template->content = "got session";
-  try {
-    $user_profile = (new FacebookRequest(
-      $session, 'GET', '/me'
-    ))->execute()->getGraphObject(GraphUser::className());
-
-    echo "Name: " . $user_profile->getName();
-
-  } catch(FacebookRequestException $e) {
-
-    echo "Exception occured, code: " . $e->getCode();
-    echo " with message: " . $e->getMessage();
-
-  }   
-
-}
-*/
-
-		  /*$request = new FacebookRequest($session, 'GET', '/me');
-		  $response = $request->execute();
-		  $graphObject = $response->getGraphObject();
-
+		try {
+			$session = $helper->getSession();
 		} catch(FacebookRequestException $ex) {
 		  // When Facebook returns an error
 		  $this->template->content = "fb returned an error";
 		} catch(\Exception $ex) {
 		  // When validation fails or other local issues
 		  $this->template->content = "validation failed";
-		  print_r($ex);
+		  //print_r($ex);
 		}
-		if ($session) {
-		  $this->template->content = "Logged in";
-		  // Logged in
+		if (isset($session)) {
+			$request = new FacebookRequest($session, 'GET', '/me');
+			$response = $request->execute();
+			$graphObject = $response->getGraphObject();
+			if (isset($graphObject->id)) {
+				$loginData = array('first_name' => $graphObject->first_name);	
+			}
+			$this->template->content = "Hi, ".$graphObject->getProperty('first_name');
+		} else {
+			echo "No session";
 		}
-*/
-		//$request = Request::factory('http://netbeans.kiall.local/kohana-oauth2-example-provider/index.php/users/me');
-
-		//$response = $consumer->execute($request);
-
-		//$me = json_decode($response->body());
-
-		//$this->response->body($response->body());
-	//	$this->template->content = View::factory('content');
 	}
 
 } // End Welcome
