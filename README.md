@@ -1,4 +1,6 @@
-# Kohana PHP Framework
+# Coop Experiment
+
+I'm making this for testing Kohana implementations.
 
 [Kohana](http://kohanaframework.org/) is an elegant, open source, and object oriented HMVC framework built using PHP5, by a team of volunteers. It aims to be swift, secure, and small.
 
