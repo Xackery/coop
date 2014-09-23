@@ -131,7 +131,8 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'smarty' => MODPATH.'smarty', //Smarty Tempating Engine
 	'facebook' => MODPATH.'facebook', //facebook
-	'blog' => MODPATH.'blog' //Blog, submodule
+	'blog' => MODPATH.'blog', //Blog
+	'post' => MODPATH.'post' //Post
 	));
 
 /**
