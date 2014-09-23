@@ -4,7 +4,7 @@ Blog system for wordpress-like features.
 
 ## Required Modules
 
-- Post Module
+- smartyauth
 
 ## Installation Instructions
 
