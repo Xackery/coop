@@ -1,0 +1,3 @@
+[submodule "modules/blog"]
+	path = modules/blog
+	url = https://github.com/Xackery/kohana-blog
